@@ -5,6 +5,7 @@ from docx import Document
 from datetime import datetime
 import zipfile
 import re
+import pytz
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
@@ -102,7 +103,8 @@ def generate_document(data, plantilla_key, firmante_key):
     template_path = os.path.join(TEMPLATES_FOLDER, PLANTILLAS[plantilla_key])
     doc = Document(template_path)
 
-    fecha_actual = datetime.now()
+    argentina_tz = pytz.timezone('America/Argentina/Buenos_Aires')
+    fecha_actual = datetime.now(argentina_tz)
     meses_es = {
         "January": "enero", "February": "febrero", "March": "marzo", "April": "abril", "May": "mayo", "June": "junio",
         "July": "julio", "August": "agosto", "September": "septiembre", "October": "octubre", "November": "noviembre", "December": "diciembre"
